@@ -1,0 +1,43 @@
+---
+- name: Deployment of Test Web server 
+  hosts: web
+  become: true
+  tasks: 
+    
+    - name: Install Apache server and firewalld 
+      yum: 
+        name: 
+          - httpd
+          - firewalld
+          - git-all 
+        state: latest 
+
+    - name: Start apache and firewalld service
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: true 
+      with_items:
+        - firewalld
+        - httpd 
+
+    - name: Allow http service on firewall
+      firewalld:
+        service: http
+        immediate: true
+        permanent: true 
+        state: enabled 
+
+    - name: Deploy project through git 
+      git:
+        repo: https://github.com/prateekkumawat/project1.git
+        dest: /var/www/html/ 
+      notify:
+        - restart httpd
+
+  handlers: 
+    - name: restart httpd
+      service: 
+        name: httpd 
+        state: restarted 
+
