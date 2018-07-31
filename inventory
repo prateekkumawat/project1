@@ -1,6 +1,11 @@
 [web]
+<<<<<<< HEAD
 node1
 
 [db]
 node2
 
+=======
+ansible-node
+client-node 
+>>>>>>> f09a2ee46517bebc6ce89e5cc4944f05062b4cb8
