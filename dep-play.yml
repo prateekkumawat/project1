@@ -1,0 +1,10 @@
+---
+- name: Install the deployment
+  hosts: web
+  become: true
+  tasks:
+
+  - name: change the /etc/motd 
+    copy:
+      content: "hello ansible manage jenkins. \n"
+      dest: /etc/motd 
